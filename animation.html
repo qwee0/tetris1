@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Плавная анимация кругов</title>
+  <style>
+    /* Сброс отступов и настройка холста на весь viewport */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      /* Медленно переливающийся градиентный фон в пастельных тонах */
+      background: linear-gradient(135deg, #f5e6e8, #e8f4f5, #f0e8f5, #e8f0f5);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Анимация фона — плавная смена позиций градиента */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Контейнер для кругов — центрирован по центру экрана */
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Общий стиль для всех кругов */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      /* Мягкое свечение через box-shadow */
+      box-shadow: 0 0 30px rgba(180, 150, 200, 0.4);
+      /* Оптимизация производительности */
+      will-change: transform, opacity;
+      /* Начальное состояние прозрачности и масштаба */
+      opacity: 0.4;
+    }
+
+    /* Индивидуальные настройки для каждого круга: размер, цвет, задержка анимации */
+    .circle:nth-child(1) {
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(255,180,200,0.6), rgba(255,180,200,0.1));
+      animation: move1 12s ease-in-out infinite;
+    }
+    .circle:nth-child(2) {
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(180,220,255,0.6), rgba(180,220,255,0.1));
+      animation: move2 15s ease-in-out infinite;
+      animation-delay: -3s;
+    }
+    .circle:nth-child(3) {
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle, rgba(200,255,220,0.6), rgba(200,255,220,0.1));
+      animation: move3 10s ease-in-out infinite;
+      animation-delay: -6s;
+    }
+    .circle:nth-child(4) {
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(255,230,180,0.6), rgba(255,230,180,0.1));
+      animation: move4 14s ease-in-out infinite;
+      animation-delay: -9s;
+    }
+    .circle:nth-child(5) {
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(230,180,255,0.6), rgba(230,180,255,0.1));
+      animation: move5 16s ease-in-out infinite;
+      animation-delay: -12s;
+    }
+
+    /* 
+      Анимации движения по синусоидальным траекториям.
+      Используем только transform (translate + scale) и opacity.
+      Ключевые кадры подобраны так, чтобы начальное и конечное состояния совпадали.
+    */
+
+    @keyframes move1 {
+      0%, 100% {
+        transform: translate(-15vw, -10vh) scale(1);
+        opacity: 0.4;
+      }
+      25% {
+        transform: translate(10vw, -15vh) scale(1.1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translate(15vw, 10vh) scale(0.95);
+        opacity: 0.5;
+      }
+      75% {
+        transform: translate(-10vw, 15vh) scale(1.05);
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes move2 {
+      0%, 100% {
+        transform: translate(20vw, -5vh) scale(1);
+        opacity: 0.5;
+      }
+      25% {
+        transform: translate(-5vw, 20vh) scale(1.08);
+        opacity: 0.65;
+      }
+      50% {
+        transform: translate(-20vw, -10vh) scale(0.92);
+        opacity: 0.45;
+      }
+      75% {
+        transform: translate(5vw, -20vh) scale(1.02);
+        opacity: 0.6;
+      }
+    }
+
+    @keyframes move3 {
+      0%, 100% {
+        transform: translate(-10vw, 15vh) scale(1);
+        opacity: 0.45;
+      }
+      25% {
+        transform: translate(15vw, 5vh) scale(1.12);
+        opacity: 0.7;
+      }
+      50% {
+        transform: translate(10vw, -15vh) scale(0.9);
+        opacity: 0.5;
+      }
+      75% {
+        transform: translate(-15vw, -5vh) scale(1.06);
+        opacity: 0.65;
+      }
+    }
+
+    @keyframes move4 {
+      0%, 100% {
+        transform: translate(5vw, 10vh) scale(1);
+        opacity: 0.5;
+      }
+      25% {
+        transform: translate(-10vw, -10vh) scale(1.05);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translate(-5vw, -10vh) scale(0.95);
+        opacity: 0.45;
+      }
+      75% {
+        transform: translate(10vw, 10vh) scale(1.03);
+        opacity: 0.65;
+      }
+    }
+
+    @keyframes move5 {
+      0%, 100% {
+        transform: translate(-5vw, -15vh) scale(1);
+        opacity: 0.4;
+      }
+      25% {
+        transform: translate(10vw, 10vh) scale(1.1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translate(5vw, 15vh) scale(0.93);
+        opacity: 0.5;
+      }
+      75% {
+        transform: translate(-10vw, -10vh) scale(1.07);
+        opacity: 0.7;
+      }
+    }
+
+    /* Адаптивность: на мобильных уменьшаем размеры кругов */
+    @media (max-width: 768px) {
+      .circle:nth-child(1) { width: 80px; height: 80px; }
+      .circle:nth-child(2) { width: 120px; height: 120px; }
+      .circle:nth-child(3) { width: 60px; height: 60px; }
+      .circle:nth-child(4) { width: 100px; height: 100px; }
+      .circle:nth-child(5) { width: 70px; height: 70px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Пять полупрозрачных кругов с индивидуальными анимациями -->
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+  <!-- JS не требуется для данной анимации, всё реализовано на CSS -->
+</body>
+</html>
