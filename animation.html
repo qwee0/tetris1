@@ -14,18 +14,9 @@
 
         body {
             overflow: hidden;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background-color: #000000; /* Черный фон */
             font-family: sans-serif;
             touch-action: none; /* Отключаем зум и скролл на мобильных */
-        }
-
-        /* Анимация переливающегося фона */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         /* Контейнер для сфер */
@@ -47,7 +38,8 @@
             user-select: none;
             /* Смешивание цветов для красивого перекрытия */
             mix-blend-mode: screen; 
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3), 0 0 15px currentColor;
+            background-color: #ffffff; /* Белые шарики */
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3), 0 0 15px rgba(255, 255, 255, 0.6); /* Белое свечение */
         }
 
         .sphere:active {
@@ -142,9 +134,9 @@
             }
 
             updateVisuals() {
-                this.el.style.backgroundColor = `hsla(${this.hue}, 70%, 60%, 0.6)`;
-                this.el.style.color = `hsla(${this.hue}, 70%, 60%, 0.8)`; // Для свечения box-shadow
-                this.el.style.boxShadow = `inset 0 0 20px rgba(255,255,255,0.3), 0 0 15px hsla(${this.hue}, 70%, 60%, 0.6)`;
+                // Белые шарики - цвет не меняем, оставляем белым
+                this.el.style.backgroundColor = '#ffffff';
+                this.el.style.boxShadow = `inset 0 0 20px rgba(255,255,255,0.3), 0 0 15px rgba(255, 255, 255, 0.6)`;
             }
 
             onPointerDown(e) {
@@ -244,8 +236,8 @@
                     this.vy = -this.vy * CONFIG.elasticity;
                 }
 
-                // Смена цвета
-                this.hue = (this.hue + CONFIG.colorSpeed) % 360;
+                // Смена цвета (отключено для белых шариков)
+                // this.hue = (this.hue + CONFIG.colorSpeed) % 360;
                 this.updateVisuals();
 
                 // Обновление позиции в DOM
